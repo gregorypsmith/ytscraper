@@ -20,20 +20,23 @@ def convertToNum(text):
 def main():
     subMin = int(argv[1])
     subMax = int(argv[2])
+    read_file = str(argv[3])
+    write_file = str(argv[4])
+    link = str(argv[5])
 
-    df = pd.read_csv('creator_list.csv')
+    print(argv[4] + ' iss SO DOOPE RICKY')
+
+    df = pd.read_csv(read_file)
     df = df.drop(columns=df.columns[3])
-    print(df)
 
     driver = webdriver.Chrome() 
-    driver.get('https://www.youtube.com/results?search_query=ap+exam+review&sp=EgIQAQ%253D%253D')
-
+    driver.get(link)
     time.sleep(10)
 
     video_data = driver.find_elements_by_xpath('//*[@id="video-title"]')
     videolinks = []
     for i in video_data:
-        videolinks.append(i.get_attribute('href'))
+        videolinks.append(str(i.get_attribute('href')))
     print(len(videolinks))
 
     wait = WebDriverWait(driver, 10)
@@ -55,7 +58,7 @@ def main():
                 names.add(name)
                 print(subs)
     print(df)
-    df.to_csv('creator_list_test.csv', index=False)
+    df.to_csv(write_file, index=False)
 
 if __name__ == "__main__":
     main()
