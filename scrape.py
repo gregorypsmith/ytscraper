@@ -24,10 +24,10 @@ def main():
     write_file = str(argv[4])
     link = str(argv[5])
 
-    print(argv[4] + ' iss SO DOOPE RICKY')
-
     df = pd.read_csv(read_file)
     df = df.drop(columns=df.columns[3])
+    print('Read ' + read_file + ', contents are:')
+    print(df)
 
     driver = webdriver.Chrome() 
     driver.get(link)
@@ -37,7 +37,6 @@ def main():
     videolinks = []
     for i in video_data:
         videolinks.append(str(i.get_attribute('href')))
-    print(len(videolinks))
 
     wait = WebDriverWait(driver, 10)
     names = set()
@@ -57,6 +56,7 @@ def main():
                 df.loc[len(df)] = [name, subs, link]
                 names.add(name)
                 print(subs)
+    print('Wrote to ' + write_file + ', contents are:')
     print(df)
     df.to_csv(write_file, index=False)
 
